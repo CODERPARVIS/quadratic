@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Quadratic Tool</title>
+</head>
+<body>
+    <header>
+        <h1>Quadratic Equation Tool</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tool.html">Quadratic Tool</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <div class="banner">
+                <h2>Calculate Roots of Quadratic Equations!</h2>
+                <p>Enter the coefficients to find the roots.</p>
+            </div>
+        </section>
+        <section>
+            <h2>Enter Coefficients</h2>
+            <form id="quadraticForm">
+                <label for="a">a:</label>
+                <input type="number" id="a" required>
+                <label for="b">b:</label>
+                <input type="number" id="b" required>
+                <label for="c">c:</label>
+                <input type="number" id="c" required>
+                <button type="submit">Solve</button>
+            </form>
+            <div id="result"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Quadratic Tool. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('quadraticForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            const discriminant = b * b - 4 * a * c;
+            let result;
+
+            if (discriminant > 0) {
+                const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                result = `Roots are real and different: ${root1} and ${root2}`;
+            } else if (discriminant === 0) {
+                const root = -b / (2 * a);
+                result = `Root is real and repeated: ${root}`;
+            } else {
+                result = 'Roots are complex and different.';
+            }
+
+            document.getElementById('result').innerText = result;
+        });
+    </script>
+</body>
+</html>
+
+
+
