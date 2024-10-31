@@ -3,72 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Quadratic Equation Tool</title>
-    <script src="https://pyscript.net/latest/pyscript.js"></script>
-    <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Quadratic Tool</title>
 </head>
 <body>
     <header>
         <h1>Quadratic Equation Tool</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="tool.html">Quadratic Tool</a></li>
+            </ul>
+        </nav>
     </header>
+
     <main>
         <section>
-            <h2>Find the Roots</h2>
-            <form id="quadraticForm" onsubmit="return false;">
-                <label for="a">a:</label>
-                <input type="number" id="a" name="a" required>
-                <label for="b">b:</label>
-                <input type="number" id="b" name="b" required>
-                <label for="c">c:</label>
-                <input type="number" id="c" name="c" required>
-                <button type="submit" id="calculateBtn">Calculate</button>
-            </form>
+            <div class="banner">
+                <h2>Calculate Roots of Quadratic Equations!</h2>
+                <p>Enter the coefficients to find the roots.</p>
+            </div>
         </section>
-        <section id="answerSection" style="display:none;">
-            <h2>Roots</h2>
-            <p id="result"></p>
-            <p id="nature"></p>
+        <section>
+            <h2>Enter Coefficients</h2>
+            <form id="quadraticForm">
+                <label for="a">a:</label>
+                <input type="number" id="a" required>
+                <label for="b">b:</label>
+                <input type="number" id="b" required>
+                <label for="c">c:</label>
+                <input type="number" id="c" required>
+                <button type="submit">Solve</button>
+            </form>
+            <div id="result"></div>
         </section>
     </main>
 
-    <py-script>
-        import math as m
-        from js import document
+    <footer>
+        <p>&copy; 2024 Quadratic Tool. All rights reserved.</p>
+    </footer>
 
-        def calculate_roots(a, b, c):
-            if a == 0:
-                return "The equation is not quadratic.", ""
-            
-            d = b * b - 4 * a * c
+    <script>
+        document.getElementById('quadraticForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            if d == 0:
-                x1 = (-b + m.sqrt(d)) / (2 * a)
-                result = f"Root is: {x1:.2f}"
-                nature = "Roots are real and equal."
-            elif d > 0:
-                x1 = (-b + m.sqrt(d)) / (2 * a)
-                x2 = (-b - m.sqrt(d)) / (2 * a)
-                result = f"Roots are: {x1:.2f} and {x2:.2f}"
-                nature = "Roots are real and distinct."
-            else:
-                return "Complex roots", "Roots are imaginary."
+            const a = parseFloat(document.getElementById('a').value);
+            const b = parseFloat(document.getElementById('b').value);
+            const c = parseFloat(document.getElementById('c').value);
+            const discriminant = b * b - 4 * a * c;
+            let result;
 
-            return result, nature
+            if (discriminant > 0) {
+                const root1 = (-b + Math.sqrt(discriminant)) / (2 * a);
+                const root2 = (-b - Math.sqrt(discriminant)) / (2 * a);
+                result = `Roots are real and different: ${root1} and ${root2}`;
+            } else if (discriminant === 0) {
+                const root = -b / (2 * a);
+                result = `Root is real and repeated: ${root}`;
+            } else {
+                result = 'Roots are complex and different.';
+            }
 
-        def calculate(event):
-            a = float(document.getElementById('a').value)
-            b = float(document.getElementById('b').value)
-            c = float(document.getElementById('c').value)
-
-            result, nature = calculate_roots(a, b, c)
-
-            document.getElementById('result').innerText = result
-            document.getElementById('nature').innerText = nature
-            document.getElementById('answerSection').style.display = 'block'
-
-        document.getElementById('calculateBtn').addEventListener('click', calculate)
-    </py-script>
+            document.getElementById('result').innerText = result;
+        });
+    </script>
 </body>
 </html>
 
